@@ -12,10 +12,10 @@
     
     <title>Crypto Tracker</title>
 </head>
-<body>
+<body class="bg-dark">
     <!--NAVBAR-->
         
-        <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <nav class="navbar navbar-expand-lg bg-gradient navbar-dark">
             <div class="container" >
 
                 <a href="#" class="navbar-brand">Crypto Tracker</a>
@@ -33,10 +33,10 @@
 
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a href="#Home" class="nav-link">Home</a>
+                            <a href="/" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#Coins" class="nav-link">Coins</a>
+                            <a href="/coins.html" class="nav-link">Coins</a>
                         </li>
                         <li class="nav-item">
                             <a href="#PortfolioTracker" class="nav-link">Portfolio Tracker</a>
@@ -70,89 +70,6 @@
                 
             </div>
         </div>
-    </section>
-
-    <section class="bg-light p-5 text-center">
-        <div class="">
-
-            <h2 class="p-3">Crypto Market Prices</h2>
-            <div class="d-flex w-75 justify-content-between m-auto">
-                <select id="coinsCurrency" class="form-select m-3" aria-label="Default select example">
-                    <option selected value="usd">Currency (Default = USD)</option>
-                    <option value="usd">USD</option>
-                    <option value="eur">EUR</option>
-                    <option value="jpy">JPY </option>
-                </select>
-                <select id="pageCoinNumber" class="form-select m-3" aria-label="Default select example">
-                    <option selected value="100">Size (Default = 100)</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                    <option value="200">200 </option>
-                </select>
-            </div>
-            
-
-            
-            <div class="" id="spinnerIcon" role="status">
-                <span class="visually-hidden"></span>
-            </div>
-            <div class="table-responsive-lg">
-                <table class="table table-secondary">
-                    <thead class="table-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Coin</th>
-                        <th scope="col">Symbol</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Volume</th>
-                        <th scope="col">Marketcap</th>
-                    </tr>
-                    </thead>
-                    <tbody id="cryptoListApi">
-                    
-                    </tbody>
-                </table>
-            </div> 
-            
-              <div class="paginationButtons d-sm-flex m-auto ">
-                <div class="my-1 m-auto w-50">
-                    <button id="pgnbtn-start" value="start" type="button"class="btnpagination w-75 btn btn-warning">Start</button>
-                </div>
-                
-                <div class="my-1 m-auto w-50">
-                    <button id="pgnbtn-previous" value="previous" type="button"class="btnpagination w-75 btn btn-warning">Previous</button>
-                </div>
-                <div id="pageNumberText" class="text-center">
-                    Page 1
-                </div>
-                <div class="my-1 m-auto w-50">
-                    <button id="pgnbtn-next" value="next" type="button"class="btnpagination w-75 btn btn-warning">Next</button>
-                </div>
-
-                <div class="my-1 m-auto w-50">
-                    <button id="pgnbtn-end" value="end" type="button"class="btnpagination w-75 btn btn-warning">End</button>
-                </div>
-              </div>
-
-
-        </div>
-    </section>
-
-    <section class="bg-dark text-light p-5 text-center">
-        <h2 class="m-3">Get Token Statistics</h2>
-        <form class="input-group d-flex  justify-content-center">
-                <div class="form-outline">
-                  <input id="coinCardSearch" type="search" placeholder="Search Token Ticker" id="form1" class="form-control" />
-                </div>
-                <button id="search-button" type="button" class="btn btn-primary">
-                  <i class="fas fa-search"></i>
-                </button>
-        </form>
-
-        <div id="coinCardFetched" class="card mx-auto my-5 text-dark" style="width: 15rem;">
-            
-        </div>
-        
     </section>
 
     

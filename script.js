@@ -77,6 +77,7 @@ const getCoinCard = async (tokenSearched = "bitcoin") =>{
         let currencyUSD = data.tickers.find(coin => coin.target == "USDT");
         let currencyEUR = data.tickers.find(coin => coin.target == "EUR");
         let currencyJPY = data.tickers.find(coin => coin.target == "JPY");
+        coinCardFetched.classList.add("card");
         document.querySelector("#coinCardFetched").innerHTML =
         `
             <div class="border-bottom">
@@ -164,4 +165,3 @@ pgnButtonTable.forEach(btn =>{
 //First fetch of the list
 
 getCoinList();
-
