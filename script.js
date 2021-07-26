@@ -48,6 +48,7 @@ const getCoinList = async (currency = "usd", size = 100, pageNumber = 1) =>{
             <tr>
                 <th scope="row">${coin.market_cap_rank}</th>
                 <td>${coin.name}</td>
+                <td>${coin.symbol}</td>
                 <td>${sign + "" + numberWithSpaces(coin.current_price)}</td>
                 <td>${sign + "" + numberWithSpaces(coin.total_volume)}</td>
                 <td>${sign + "" + numberWithSpaces(coin.market_cap)}</td>
@@ -65,10 +66,15 @@ const getCoinList = async (currency = "usd", size = 100, pageNumber = 1) =>{
 
 const getCoinCard = async (tokenSearched = "bitcoin") =>{
     try{
-        const result = await fetch(`https://api.coingecko.com/api/v3/coins/${tokenSearched}`)
-        const data = await result.json()
-        console.log(data);
-        let currencyUSD = data.tickers.find(coin => coin.target == "USD");
+        const resultCoinList = await fetch(`https://api.coingecko.com/api/v3/coins/list`)
+        const dataCoinList = await resultCoinList.json()
+        let tokenID = dataCoinList.find(token1 => {if (token1.symbol == tokenSearched){return token1}});
+
+
+
+        const resultTokenSearch = await fetch(`https://api.coingecko.com/api/v3/coins/${tokenID.id}`)
+        const data = await resultTokenSearch.json()
+        let currencyUSD = data.tickers.find(coin => coin.target == "USDT");
         let currencyEUR = data.tickers.find(coin => coin.target == "EUR");
         let currencyJPY = data.tickers.find(coin => coin.target == "JPY");
         document.querySelector("#coinCardFetched").innerHTML =
@@ -79,20 +85,19 @@ const getCoinCard = async (tokenSearched = "bitcoin") =>{
             <h4>Rank ${data.market_cap_rank} | ${data.name}</h4>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Prices</li>
-                <li class="list-group-item">${currencyUSD.target}: ${Math.round(currencyUSD.last)}</li>
-                <li class="list-group-item">${currencyEUR.target}: ${Math.round(currencyEUR.last)}</li>
-                <li class="list-group-item">${currencyJPY.target}: ${Math.round(currencyJPY.last)}</li>
+                <li class="list-group-item">USD: ${currencyUSD?.last.toFixed(3)}</li>
+                <li class="list-group-item">EUR: ${currencyEUR?.last.toFixed(3)}</li>
             </ul>
             <div class="card-body">
-                <a href="${data.links.official_forum_url[0]}" class="card-link link-success">Official Forum URL</a>
-                <a href="${data.links.repos_url.github[0]}" class="card-link link-success">Git URL</a>
+                <a href="${data?.links?.official_forum_url[0]}" class="card-link link-success">Official Forum URL</a>
+                <a href="${data?.links?.repos_url.github[0]}" class="card-link link-success">Git URL</a>
             </div>
         `
 
 
 
     }catch(err){
-        alert("There was an error trying to fetch the token: Please make sure the token name is correct");
+        alert("There was an error trying to fetch the token: Please make sure the token ticker is correct");
     }
 }
 
