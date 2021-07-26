@@ -7,6 +7,7 @@ const paginationBtnPrevious = document.querySelector("#pgnbtn-previous");
 const paginationBtnNext = document.querySelector("#pgnbtn-next");
 const paginationBtnEnd = document.querySelector("#pgnbtn-end");
 const pageNumberText = document.querySelector("#pageNumberText");
+const coinCardSearch = document.querySelector("#coinCardSearch");
 const pgnButtonTable = [paginationBtnStart, paginationBtnPrevious, paginationBtnNext, paginationBtnEnd];
 let pageOrder = 1;
 
@@ -59,12 +60,46 @@ const getCoinList = async (currency = "usd", size = 100, pageNumber = 1) =>{
         SpinnerIcon.classList.remove("spinner-border");
         alert("Error: Cannot Fetch The Market Data")
         console.err(err)
-        
     }
-
-    
-    
 }
+
+const getCoinCard = async (tokenSearched = "bitcoin") =>{
+    try{
+        const result = await fetch(`https://api.coingecko.com/api/v3/coins/${tokenSearched}`)
+        const data = await result.json()
+        console.log(data);
+        let currencyUSD = data.tickers.find(coin => coin.target == "USD");
+        let currencyEUR = data.tickers.find(coin => coin.target == "EUR");
+        let currencyJPY = data.tickers.find(coin => coin.target == "JPY");
+        document.querySelector("#coinCardFetched").innerHTML =
+        `
+            <div class="border-bottom">
+                <img src="${data.image.large}" class="card-img-top w-75" alt="...">
+            </div>
+            <h4>Rank ${data.market_cap_rank} | ${data.name}</h4>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Prices</li>
+                <li class="list-group-item">${currencyUSD.target}: ${Math.round(currencyUSD.last)}</li>
+                <li class="list-group-item">${currencyEUR.target}: ${Math.round(currencyEUR.last)}</li>
+                <li class="list-group-item">${currencyJPY.target}: ${Math.round(currencyJPY.last)}</li>
+            </ul>
+            <div class="card-body">
+                <a href="${data.links.official_forum_url[0]}" class="card-link link-success">Official Forum URL</a>
+                <a href="${data.links.repos_url.github[0]}" class="card-link link-success">Git URL</a>
+            </div>
+        `
+
+
+
+    }catch(err){
+        alert("There was an error trying to fetch the token: Please make sure the token name is correct");
+    }
+}
+
+document.querySelector("#search-button").addEventListener("click", event =>{
+    getCoinCard(coinCardSearch.value);
+})
+
 
 currencyChosen.addEventListener("change", event =>{
     getCoinList(event.currentTarget.value, listSize.value);
@@ -114,6 +149,14 @@ pgnButtonTable.forEach(btn =>{
         
     })
 })
+
+
+
+
+
+
+
+//First fetch of the list
 
 getCoinList();
 
