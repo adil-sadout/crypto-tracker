@@ -1,7 +1,7 @@
 const cryptoTable = document.querySelector("#cryptoListApi");
 const currencyChosen = document.querySelector("#coinsCurrency");
 const listSize = document.querySelector("#pageCoinNumber");
-const SpinnerIcon = document.querySelector("#spinnerIcon");
+const SpinnerIcon1 = document.querySelector("#spinnerIcon");
 const paginationBtnStart = document.querySelector("#pgnbtn-start");
 const paginationBtnPrevious = document.querySelector("#pgnbtn-previous");
 const paginationBtnNext = document.querySelector("#pgnbtn-next");
@@ -29,7 +29,7 @@ function disableButtonTemp(){
 const getCoinList = async (currency = "usd", size = 100, pageNumber = 1) =>{
     try{
         cryptoTable.innerHTML = "";
-        SpinnerIcon.classList.add("spinner-border");
+        SpinnerIcon1.classList.add("spinner-border");
         let result = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=${size}&page=${pageNumber}&sparkline=false`)
         let data = await result.json();
         switch (currency) {
@@ -55,10 +55,10 @@ const getCoinList = async (currency = "usd", size = 100, pageNumber = 1) =>{
             </tr>
             `)
         })
-        SpinnerIcon.classList.remove("spinner-border");
+        SpinnerIcon1.classList.remove("spinner-border");
     
     }catch(err){
-        SpinnerIcon.classList.remove("spinner-border");
+        SpinnerIcon1.classList.remove("spinner-border");
         alert("Error: Cannot Fetch The Market Data")
         console.err(err)
     }
@@ -69,7 +69,6 @@ const getCoinCard = async (tokenSearched = "bitcoin") =>{
         const resultCoinList = await fetch(`https://api.coingecko.com/api/v3/coins/list`)
         const dataCoinList = await resultCoinList.json()
         let tokenID = dataCoinList.find(token1 => {if (token1.symbol == tokenSearched){return token1}});
-
 
 
         const resultTokenSearch = await fetch(`https://api.coingecko.com/api/v3/coins/${tokenID.id}`)
@@ -86,8 +85,8 @@ const getCoinCard = async (tokenSearched = "bitcoin") =>{
             <h4>Rank ${data.market_cap_rank} | ${data.name}</h4>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Prices</li>
-                <li class="list-group-item">USD: ${currencyUSD?.last.toFixed(3)}</li>
-                <li class="list-group-item">EUR: ${currencyEUR?.last.toFixed(3)}</li>
+                <li class="list-group-item">USD: ${currencyUSD?.last.toFixed(3) ?? "N/A"}</li>
+                <li class="list-group-item">EUR: ${currencyEUR?.last.toFixed(3) ?? "N/A"}</li>
             </ul>
             <div class="card-body">
                 <a href="${data?.links?.official_forum_url[0]}" class="card-link link-success">Official Forum URL</a>
@@ -103,7 +102,7 @@ const getCoinCard = async (tokenSearched = "bitcoin") =>{
 }
 
 document.querySelector("#search-button").addEventListener("click", event =>{
-    getCoinCard(coinCardSearch.value);
+    getCoinCard(coinCardSearch.value.trim());
 })
 
 
