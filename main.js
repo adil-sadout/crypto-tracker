@@ -10,6 +10,7 @@ const userNFTsContainer = document.querySelector("#userNFTsContainer");
 const userTokensTable = document.querySelector("#userTokens");
 const userNFTGrid = document.querySelector("#nftGrid");
 const SpinnerIcon2 = document.querySelector("#spinnerIcon2");
+const SpinnerIcon3 = document.querySelector("#spinnerIcon3");
 
 async function login() {
     try {
@@ -24,6 +25,7 @@ async function login() {
         return currentUser;
     } catch (error) {
         SpinnerIcon2.classList.remove("spinner-border");
+        SpinnerIcon3.classList.remove("spinner-border");
         alert("Error: Cannot Fetch User Balance")
         console.log(error);
     }
@@ -46,6 +48,7 @@ async function logout() {
 async function fetchUserPortfolio(){
     chainSelectedList.addEventListener("change", async event =>{
         SpinnerIcon2.classList.add("spinner-border");
+        SpinnerIcon3.classList.add("spinner-border");
         userTokensContainer.classList?.remove("d-none");
         userNFTsContainer.classList?.remove("d-none");
         userTokensTable.innerHTML = "";
@@ -66,14 +69,7 @@ async function fetchUserPortfolio(){
         if (userNFTs.length > 0){
             userNFTs.forEach(async nft =>{
                 try{
-                    let response = await fetch(nft.token_uri,{
-                        mode: 'cors',
-                        header:{
-                            'Access-Control-Allow-Origin': '*',
-                            'Control-Allow-Origin': '*'
-                        }
-
-                });
+                    let response = await fetch(`https://cors-anywhere.herokuapp.com/${nft.token_uri}`);
                     let nftObject = await response.json();
                     console.log(nftObject);
                     console.log(nft);
@@ -81,8 +77,8 @@ async function fetchUserPortfolio(){
                     userNFTGrid.insertAdjacentHTML("afterbegin", `
     
                 <div class="col">
-                    <div class="card my-5 mx-auto" style="width: 18rem;">
-                        <img src="${nftObject.image}" class="card-img-top" alt="...">
+                    <div class="card my-5 mx-auto" style="width: 18rem; height:500px;">
+                        <img src="${nftObject.image}" class="card-img-top" style="height:250px" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">${nftObject.name}</h5>
                             <p class="card-text">Token Address: ${nft.token_address}</p>
@@ -112,6 +108,7 @@ async function fetchUserPortfolio(){
 
 
         SpinnerIcon2.classList.remove("spinner-border");
+        SpinnerIcon3.classList.remove("spinner-border");
         
     })
 }
