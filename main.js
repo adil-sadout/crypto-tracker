@@ -52,6 +52,7 @@ async function fetchUserPortfolio(){
         userTokensContainer.classList?.remove("d-none");
         userNFTsContainer.classList?.remove("d-none");
         userTokensTable.innerHTML = "";
+        userNFTGrid.innerHTML = "";
         let Balances = await fetchToken();
         let userNFTs = await fetchNFT();
         
