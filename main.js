@@ -11,6 +11,7 @@ const userTokensTable = document.querySelector("#userTokens");
 const userNFTGrid = document.querySelector("#nftGrid");
 const SpinnerIcon2 = document.querySelector("#spinnerIcon2");
 const SpinnerIcon3 = document.querySelector("#spinnerIcon3");
+const messageLeftNFT = document.querySelector("#messageLeftNFT");
 
 async function login() {
     try {
@@ -51,6 +52,9 @@ async function fetchUserPortfolio(){
         SpinnerIcon3.classList.add("spinner-border");
         userTokensContainer.classList?.remove("d-none");
         userNFTsContainer.classList?.remove("d-none");
+        if (!messageLeftNFT.classList.contains("d-none")){
+            messageLeftNFT.classList.add("d-none");
+        }
         userTokensTable.innerHTML = "";
         userNFTGrid.innerHTML = "";
         let Balances = await fetchToken();
@@ -68,6 +72,7 @@ async function fetchUserPortfolio(){
         `)
         })
         if (userNFTs.length > 0){
+
             userNFTs.forEach(async nft =>{
                 try{
                     let response = await fetch(`https://cors-anywhere.herokuapp.com/${nft.token_uri}`);
@@ -96,12 +101,10 @@ async function fetchUserPortfolio(){
                 
                 
             })
-        }else{
-            userNFTGrid.insertAdjacentHTML("afterbegin", `
-    
-                No NFTs Were Found
-    
-            `)
+        }
+
+        if(userNFTs.length == 0){
+            messageLeftNFT.classList.remove("d-none")
         }
         
 
