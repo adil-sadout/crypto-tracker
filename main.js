@@ -71,8 +71,6 @@ async function fetchUserPortfolio(){
                 try{
                     let response = await fetch(`https://cors-anywhere.herokuapp.com/${nft.token_uri}`);
                     let nftObject = await response.json();
-                    console.log(nftObject);
-                    console.log(nft);
 
                     userNFTGrid.insertAdjacentHTML("afterbegin", `
     
@@ -115,19 +113,16 @@ async function fetchUserPortfolio(){
 
 async function fetchToken(){
     let Balances = await Moralis.Web3.getAllERC20({chain: event.currentTarget.value});
-    console.log(Balances);
     return Balances
 }
 
 async function fetchNFT(){
     let userNFTs = await Moralis.Web3.getNFTs({chain:chainSelectedList.value});
-    console.log(userNFTs);
     return userNFTs
 }
 
 loginBtn.addEventListener("click", async event =>{
     currentUserConnected = await login();
-    console.log(currentUserConnected)
     fetchUserPortfolio();
 })
 
