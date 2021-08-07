@@ -76,14 +76,9 @@ async function fetchUserPortfolio(){
             userNFTs.forEach(async nft =>{
                 
                 try{
-                    let response = await fetch(`https://cors-anywhere.herokuapp.com/${nft.token_uri}`,{
-                        header:{
-                            'Origin':'*'
-                        }
-                    });
+                    let response = await fetch(`${nft.token_uri}`);
                     let nftObject = await response.json();
                     console.log(nftObject)
-                    console.log(nft)
 
                     userNFTGrid.insertAdjacentHTML("afterbegin", `
     
