@@ -1,5 +1,5 @@
-Moralis.initialize("t6HAC51BVh8AVzOQbpeA1zn3F1FIjOmV11HX4HG4"); // Application id from moralis.io
-Moralis.serverURL = "https://seyrrilcwynh.usemoralis.com:2053/server"; //Server url from moralis.io
+Moralis.initialize("wxgAWAbsP1Fx2s9O3RcVVp55YDbcWBNEgwLZi77p"); // Application id from moralis.io
+Moralis.serverURL = "https://r0wdcovlzfig.usemoralis.com:2053/server"; //Server url from moralis.io
 
 const loginBtn = document.querySelector("#login_button");
 const chainSelectContainer = document.querySelector("#chainSelectedContainer");
@@ -12,6 +12,12 @@ const userNFTGrid = document.querySelector("#nftGrid");
 const SpinnerIcon2 = document.querySelector("#spinnerIcon2");
 const SpinnerIcon3 = document.querySelector("#spinnerIcon3");
 const messageLeftNFT = document.querySelector("#messageLeftNFT");
+
+
+
+
+
+
 
 async function login() {
     try {
@@ -118,13 +124,15 @@ async function fetchUserPortfolio(){
 }
 
 async function fetchToken(){
-    let Balances = await Moralis.Web3.getAllERC20({chain: event.currentTarget.value});
+    let Balances = await Moralis.Web3API.account.getTokenBalances({chain:chainSelectedList.value});
+    console.log(Balances)
     return Balances
 }
 
 async function fetchNFT(){
-    let userNFTs = await Moralis.Web3.getNFTs({chain:chainSelectedList.value});
-    return userNFTs
+    let userNFTs = await Moralis.Web3API.account.getNFTs({chain:chainSelectedList.value});
+    console.log(userNFTs)
+    return userNFTs.result
 }
 
 loginBtn.addEventListener("click", async event =>{
